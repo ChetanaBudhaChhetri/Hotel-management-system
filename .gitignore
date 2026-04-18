@@ -1,0 +1,14 @@
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.env
+.env.*
+hotel_management.db
+ngrok.exe
+*.zip
+*.log
+run_app.ps1
+run_with_ngrok.ps1
+download_ngrok.ps1
