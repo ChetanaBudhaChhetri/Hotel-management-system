@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% block title %}Billing | Royal Crest Hotel{% endblock %}
+{% block page_title %}Billing System{% endblock %}
+{% block content %}
+<div class="bill-card glass-card">
+    <div class="bill-header">
+        <div>
+            <span class="eyebrow">Royal Crest Hotel</span>
+            <h3>Guest Invoice</h3>
+            <p>Luxury stay, beautifully managed.</p>
+        </div>
+        <div class="invoice-badge">Invoice #{{ booking.id }}</div>
+    </div>
+
+    <div class="bill-grid">
+        <div>
+            <h4>Guest Details</h4>
+            <p><strong>Name:</strong> {{ booking.name }}</p>
+            <p><strong>Phone:</strong> {{ booking.phone }}</p>
+            <p><strong>ID Proof:</strong> {{ booking.id_proof }}</p>
+        </div>
+        <div>
+            <h4>Stay Details</h4>
+            <p><strong>Room No:</strong> {{ booking.room_no }}</p>
+            <p><strong>Room Type:</strong> {{ booking.type }}</p>
+            <p><strong>Check-In:</strong> {{ booking.check_in_date }}</p>
+            <p><strong>Check-Out:</strong> {{ booking.check_out_date if booking.check_out_date else 'Pending' }}</p>
+        </div>
+    </div>
+
+    <div class="table-wrap bill-table">
+        <table>
+            <thead>
+                <tr>
+                    <th>Description</th>
+                    <th>Days</th>
+                    <th>Rate / Day</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ booking.type }} Room Charge</td>
+                    <td>{{ booking.days }}</td>
+                    <td>₹{{ '%.2f'|format(booking.price) }}</td>
+                    <td>₹{{ '%.2f'|format(booking.total_amount) }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="bill-total">
+        <span>Grand Total</span>
+        <strong>₹{{ '%.2f'|format(booking.total_amount) }}</strong>
+    </div>
+</div>
+{% endblock %}

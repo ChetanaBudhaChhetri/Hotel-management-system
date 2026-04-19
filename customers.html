@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% block title %}Customers | Royal Crest Hotel{% endblock %}
+{% block page_title %}Customer Management{% endblock %}
+{% block content %}
+<section class="panel-grid two-col">
+    <div class="glass-card panel-card">
+        <div class="panel-head"><h3>Add Customer</h3><span>Register guest details</span></div>
+        <form method="POST" class="grid-form">
+            <div class="input-group full-span">
+                <label>Customer Name</label>
+                <input type="text" name="name" placeholder="Guest full name" required>
+            </div>
+            <div class="input-group">
+                <label>Phone Number</label>
+                <input type="text" name="phone" placeholder="9876543210" required>
+            </div>
+            <div class="input-group">
+                <label>ID Proof</label>
+                <input type="text" name="id_proof" placeholder="Passport / Aadhaar / PAN" required>
+            </div>
+            <div class="full-span"><button class="btn btn-primary" type="submit">Add Customer</button></div>
+        </form>
+    </div>
+    <div class="glass-card panel-card">
+        <div class="panel-head"><h3>Search Guests</h3><span>Search by customer name</span></div>
+        <form method="GET" class="search-form">
+            <div class="input-wrap">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" name="search" value="{{ search }}" placeholder="Search by guest name">
+            </div>
+            <button class="btn btn-secondary" type="submit">Search</button>
+        </form>
+    </div>
+</section>
+
+<div class="glass-card panel-card">
+    <div class="panel-head"><h3>Customer List</h3><span>Stored guest details</span></div>
+    <div class="table-wrap">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Phone</th>
+                    <th>ID Proof</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for customer in customers %}
+                <tr>
+                    <td>{{ customer.id }}</td>
+                    <td>{{ customer.name }}</td>
+                    <td>{{ customer.phone }}</td>
+                    <td>{{ customer.id_proof }}</td>
+                </tr>
+                {% else %}
+                <tr><td colspan="4" class="empty-state">No customers found.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block title %}Check Out | Royal Crest Hotel{% endblock %}
+{% block page_title %}Guest Check-Out{% endblock %}
+{% block content %}
+<div class="glass-card panel-card narrow-card">
+    <div class="panel-head"><h3>Confirm Check-Out</h3><span>Review guest billing summary</span></div>
+    <div class="summary-grid">
+        <div><span>Guest Name</span><strong>{{ booking.name }}</strong></div>
+        <div><span>Room Number</span><strong>{{ booking.room_no }}</strong></div>
+        <div><span>Room Type</span><strong>{{ booking.type }}</strong></div>
+        <div><span>Price / Day</span><strong>₹{{ '%.2f'|format(booking.price) }}</strong></div>
+        <div><span>Days Stayed</span><strong>{{ booking.days }}</strong></div>
+        <div><span>Total Bill</span><strong>₹{{ '%.2f'|format(booking.total_amount) }}</strong></div>
+    </div>
+    <form method="POST" class="inline-actions">
+        <button type="submit" class="btn btn-primary">Confirm Check-Out</button>
+        <a href="{{ url_for('bookings') }}" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+{% endblock %}

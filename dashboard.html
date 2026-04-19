@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% block title %}Dashboard | Royal Crest Hotel{% endblock %}
+{% block page_title %}Dashboard Overview{% endblock %}
+{% block content %}
+<section class="hero-banner glass-card">
+    <div>
+        <span class="eyebrow">Operations Summary</span>
+        <h3>Welcome to the Royal Crest control center</h3>
+        <p>Track room inventory, guests, reservations, and revenue at a glance.</p>
+    </div>
+    <div class="hero-badge"><i class="fa-solid fa-star"></i> Premium Stay Experience</div>
+</section>
+
+<section class="stats-grid">
+    <article class="stat-card glass-card">
+        <div class="stat-icon gold"><i class="fa-solid fa-door-open"></i></div>
+        <div><p>Total Rooms</p><h3>{{ stats.total_rooms }}</h3></div>
+    </article>
+    <article class="stat-card glass-card">
+        <div class="stat-icon green"><i class="fa-solid fa-bed"></i></div>
+        <div><p>Available Rooms</p><h3>{{ stats.available_rooms }}</h3></div>
+    </article>
+    <article class="stat-card glass-card">
+        <div class="stat-icon blue"><i class="fa-solid fa-calendar-days"></i></div>
+        <div><p>Booked Rooms</p><h3>{{ stats.booked_rooms }}</h3></div>
+    </article>
+    <article class="stat-card glass-card">
+        <div class="stat-icon navy"><i class="fa-solid fa-users"></i></div>
+        <div><p>Total Customers</p><h3>{{ stats.total_customers }}</h3></div>
+    </article>
+</section>
+
+<section class="panel-grid two-col">
+    <div class="glass-card panel-card">
+        <div class="panel-head"><h3>Recent Bookings</h3><span>Latest 5 records</span></div>
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Room</th>
+                        <th>Guest</th>
+                        <th>Check-In</th>
+                        <th>Days</th>
+                        <th>Total</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for booking in recent_bookings %}
+                    <tr>
+                        <td>{{ booking.room_no }} <small>{{ booking.type }}</small></td>
+                        <td>{{ booking.name }}<br><small>{{ booking.phone }}</small></td>
+                        <td>{{ booking.check_in_date }}</td>
+                        <td>{{ booking.days }}</td>
+                        <td>₹{{ '%.2f'|format(booking.total_amount) }}</td>
+                        <td><span class="badge {% if booking.booking_status == 'Checked-Out' %}gray{% else %}gold{% endif %}">{{ booking.booking_status }}</span></td>
+                    </tr>
+                    {% else %}
+                    <tr><td colspan="6" class="empty-state">No bookings yet.</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="glass-card panel-card quick-actions">
+        <div class="panel-head"><h3>Quick Actions</h3><span>Manage hotel flow</span></div>
+        <a href="{{ url_for('rooms') }}" class="action-link"><i class="fa-solid fa-plus"></i> Add a new room</a>
+        <a href="{{ url_for('customers') }}" class="action-link"><i class="fa-solid fa-user-plus"></i> Register new customer</a>
+        <a href="{{ url_for('bookings') }}" class="action-link"><i class="fa-solid fa-calendar-plus"></i> Create booking</a>
+        <div class="info-box">
+            <h4>Hotel Tip</h4>
+            <p>Keep room inventory updated after check-out to avoid booking conflicts and improve guest experience.</p>
+        </div>
+    </div>
+</section>
+{% endblock %}

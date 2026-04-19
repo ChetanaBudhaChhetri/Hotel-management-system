@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block title %}Login | Royal Crest Hotel{% endblock %}
+{% block auth_content %}
+<section class="login-page">
+    <div class="login-overlay"></div>
+    <div class="login-card glass-card">
+        <div class="login-copy">
+            <span class="eyebrow">Premium Hotel Suite</span>
+            <h1>Manage every room, guest, and booking from one elegant dashboard.</h1>
+            <p>Designed for front-desk efficiency with a premium hotel brand experience.</p>
+            <ul class="feature-list">
+                <li><i class="fa-solid fa-check"></i> Smart room availability tracking</li>
+                <li><i class="fa-solid fa-check"></i> Fast customer and booking management</li>
+                <li><i class="fa-solid fa-check"></i> Instant billing and check-out</li>
+            </ul>
+        </div>
+        <form class="login-form" method="POST">
+            <div class="form-heading">
+                <h2>Admin Login</h2>
+                <p>Enter your admin credentials to continue.</p>
+            </div>
+            <div class="input-group">
+                <label>Username</label>
+                <div class="input-wrap"><i class="fa-solid fa-user"></i><input type="text" name="username" placeholder="Enter username" required></div>
+            </div>
+            <div class="input-group">
+                <label>Password</label>
+                <div class="input-wrap"><i class="fa-solid fa-lock"></i><input type="password" name="password" placeholder="Enter password" required></div>
+            </div>
+            <button class="btn btn-primary btn-block" type="submit">Sign In</button>
+        </form>
+    </div>
+</section>
+{% endblock %}

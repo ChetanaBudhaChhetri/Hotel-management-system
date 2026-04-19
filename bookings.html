@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+{% block title %}Bookings | Royal Crest Hotel{% endblock %}
+{% block page_title %}Booking & Stay Management{% endblock %}
+{% block content %}
+<section class="panel-grid two-col booking-layout">
+    <div class="glass-card panel-card">
+        <div class="panel-head"><h3>Create Booking</h3><span>Assign room to customer</span></div>
+        <form method="POST" class="grid-form">
+            <div class="input-group">
+                <label>Select Available Room</label>
+                <select name="room_id" required>
+                    <option value="">Choose room</option>
+                    {% for room in rooms %}
+                    <option value="{{ room.id }}">Room {{ room.room_no }} - {{ room.type }} - ₹{{ '%.0f'|format(room.price) }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="input-group">
+                <label>Select Customer</label>
+                <select name="customer_id" required>
+                    <option value="">Choose customer</option>
+                    {% for customer in customers %}
+                    <option value="{{ customer.id }}">{{ customer.name }} - {{ customer.phone }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="input-group">
+                <label>Check-In Date</label>
+                <input type="date" name="check_in_date" min="{{ today }}" required>
+            </div>
+            <div class="input-group">
+                <label>Number of Days</label>
+                <input type="number" name="days" min="1" placeholder="2" required>
+            </div>
+            <div class="full-span"><button class="btn btn-primary" type="submit">Confirm Booking</button></div>
+        </form>
+    </div>
+    <div class="glass-card panel-card info-panel">
+        <div class="panel-head"><h3>Check-In / Check-Out</h3><span>Operational steps</span></div>
+        <ol class="timeline-list">
+            <li>Select an available room.</li>
+            <li>Choose a registered customer.</li>
+            <li>Enter check-in date and duration.</li>
+            <li>System calculates total amount automatically.</li>
+            <li>On check-out, the room becomes available again.</li>
+        </ol>
+    </div>
+</section>
+
+<div class="glass-card panel-card">
+    <div class="panel-head"><h3>Booking Records</h3><span>Track all active and completed stays</span></div>
+    <div class="table-wrap">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Room</th>
+                    <th>Customer</th>
+                    <th>Check-In</th>
+                    <th>Days</th>
+                    <th>Bill</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for booking in bookings %}
+                <tr>
+                    <td>{{ booking.id }}</td>
+                    <td>{{ booking.room_no }}<br><small>{{ booking.type }}</small></td>
+                    <td>{{ booking.name }}<br><small>{{ booking.phone }}</small></td>
+                    <td>{{ booking.check_in_date }}</td>
+                    <td>{{ booking.days }}</td>
+                    <td>₹{{ '%.2f'|format(booking.total_amount) }}</td>
+                    <td><span class="badge {% if booking.booking_status == 'Checked-Out' %}gray{% else %}gold{% endif %}">{{ booking.booking_status }}</span></td>
+                    <td>
+                        <div class="action-buttons">
+                            <a href="{{ url_for('bill', booking_id=booking.id) }}" class="table-btn"><i class="fa-solid fa-file-invoice"></i></a>
+                            {% if booking.booking_status != 'Checked-Out' %}
+                            <a href="{{ url_for('checkout', booking_id=booking.id) }}" class="table-btn danger"><i class="fa-solid fa-right-from-bracket"></i></a>
+                            {% endif %}
+                        </div>
+                    </td>
+                </tr>
+                {% else %}
+                <tr><td colspan="8" class="empty-state">No bookings available.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
