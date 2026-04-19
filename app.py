@@ -4,9 +4,14 @@ from functools import wraps
 from datetime import datetime
 from db import get_connection, fetch_all, fetch_one, execute_query
 from config import Config
+from setup import setup_database
 
 app = Flask(__name__)
 app.config.from_object(Config)
+
+# Automatically initialize the database on startup if it's missing or empty
+if not os.path.exists(Config.DB_PATH) or os.path.getsize(Config.DB_PATH) == 0:
+    setup_database()
 
 
 def login_required(view_func):

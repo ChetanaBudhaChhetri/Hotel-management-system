@@ -5,7 +5,6 @@ __pycache__/
 *.pyd
 .env
 .env.*
-hotel_management.db
 ngrok.exe
 *.zip
 *.log
