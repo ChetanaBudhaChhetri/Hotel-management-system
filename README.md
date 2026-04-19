@@ -9,4 +9,4 @@
 ## Tech Stack
 - Frontend: HTML, CSS, JS
 - Backend: Python (Flask)
-- Database: MySQL
+- Database: SQlite
